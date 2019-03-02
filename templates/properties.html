@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Properties</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <style>
+        /* Rating Star Widgets Style */
+        .rating-stars ul {
+          list-style-type:none;
+          padding:0;
+
+          -moz-user-select:none;
+          -webkit-user-select:none;
+        }
+        .rating-stars ul > li.star {
+          display:inline-block;
+
+        }
+
+        /* Idle State of the stars */
+        .rating-stars ul > li.star > i.fa {
+          font-size:1.5em; /* Change the size of the stars */
+          color:#ccc; /* Color on idle state */
+        }
+
+        /* Hover state of the stars */
+        .rating-stars ul > li.star.hover > i.fa {
+          color:#FFCC36;
+        }
+
+        /* Selected state of the stars */
+        .rating-stars ul > li.star.selected > i.fa {
+          color:#FF912C;
+        }
+    </style>
+    <script>
+        function enableEdit(){
+            var textbox = document.getElementById("image_title");
+            textbox.focus();
+            textbox.removeAttribute('readonly');
+            document.getElementById("edit").style.visibility = "visible"
+        }
+        $(document).ready(function(){
+            var onStar1 = {{rating}};
+            var stars = $('#stars li').parent().children('li.star');
+            for (i = 0; i < stars.length; i++) {
+              $(stars[i]).removeClass('selected');
+            }
+
+            for (i = 0; i < onStar1; i++) {
+              $(stars[i]).addClass('selected');
+            }
+
+          $('#stars li').on('mouseover', function(){
+            var onStar = parseInt($(this).data('value'), 10);
+
+            $(this).parent().children('li.star').each(function(e){
+              if (e < onStar) {
+                $(this).addClass('hover');
+              }
+              else {
+                $(this).removeClass('hover');
+              }
+            });
+
+          }).on('mouseout', function(){
+            $(this).parent().children('li.star').each(function(e){
+              $(this).removeClass('hover');
+            });
+          });
+
+          $('#stars li').on('click', function(){
+            var onStar = parseInt($(this).data('value'), 10);
+            var stars = $(this).parent().children('li.star');
+            for (i = 0; i < stars.length; i++) {
+              $(stars[i]).removeClass('selected');
+            }
+
+            for (i = 0; i < onStar; i++) {
+              $(stars[i]).addClass('selected');
+            }
+            var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+            document.getElementById("ratingValue").value = ratingValue;
+            $('#rating_form').submit();
+          });
+        });
+    </script>
+</head>
+<body>
+    <div class="w3-bar w3-blue">
+       <div class="w3-bar-item"><a href="/view_images">View Images</a></div>
+       <div class="w3-bar-item"><a href="/upload_images">Upload Images</a></div>
+       <div class="w3-bar-item"><a href="/search_image">Search Image</a></div>
+       <div style="float:right" class="w3-bar-item"><a href="/logout">Logout</a> </div>
+       <div style="float:right" class="w3-bar-item"><label>Logged in as : {{username}}</label> </div>
+    </div>
+
+            <br/>
+        <div style="padding-left:20px" width="50%">
+            <h1>Image Properties for : {{title}}</h1>
+            <table style="max-width:50%" class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Title</th>
+                        <td>
+                            <form name="edit_title" action ={{url_for('edit',title=title)}} method = "POST" enctype = "multipart/form-data">
+                                    <input name="image_title" onfocus="this.select();" type="text" readonly class="form-control" type="text" id="image_title" value={{title}} />
+                                    <button type="button" class="btn btn-link" onClick="enableEdit()">Edit</button><br/>
+                                    <input style="visibility:hidden" id="edit" type="submit" value="Done"/>
+                            </form>
+                        </td>
+                        <td rowspan="4"><center><b>Image</b><br/><img width="300" height="300" src={{image_full_path}} /></center></td>
+                    </tr>
+                    <tr>
+                        <th>Created By</th>
+                        <td>{{owner}}</td>
+                    </tr>
+                    <tr>
+                        <th>Created On</th>
+                        <td>{{created}}</td>
+                    </tr>
+                    <tr>
+                        <th>Last Modified On</th>
+                        <td>{{modified}}</td>
+                    </tr>
+                     <tr>
+                        <th>Likes</th>
+                        <td>{{likes}}</td>
+                        <td><center>Hit the Like button! <a href={{url_for('like',title=title)}}><img style="padding-bottom:5px" width="25" height="25" src={{url_for('static',filename='like.png')}} /></a></center></td></td>
+                    </tr>
+                    <tr>
+                        <td>Ratings</td>
+                        <td colspan="2">
+                            <form name="rating_form" id="rating_form" action="{{url_for('rate',title=title)}}" method = "POST" enctype = "multipart/form-data">
+                                <div class='rating-stars text-center'>
+                                    <ul id='stars'>
+                                      <li class='star' data-value='1'>
+                                        <i class='fa fa-star fa-fw'></i>
+                                      </li>
+                                      <li class='star' data-value='2'>
+                                        <i class='fa fa-star fa-fw'></i>
+                                      </li>
+                                      <li class='star' data-value='3'>
+                                        <i class='fa fa-star fa-fw'></i>
+                                      </li>
+                                      <li class='star' data-value='4'>
+                                        <i class='fa fa-star fa-fw'></i>
+                                      </li>
+                                      <li class='star' data-value='5'>
+                                        <i class='fa fa-star fa-fw'></i>
+                                      </li>
+                                    </ul>
+                                     <input name='ratingValue' id='ratingValue'type='hidden'/>
+                                  </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <center><a href={{url_for('delete',title=title)}} />Delete Image</a></center>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</body>
+</html>

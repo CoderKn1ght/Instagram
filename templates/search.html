@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Image</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+    <div class="w3-bar w3-blue">
+      <div class="w3-bar-item"><a href="/view_images">View Images</a></div>
+      <div class="w3-bar-item"><a href="/upload_images">Upload Images</a></div>
+        <div class="w3-bar-item"><a href="/search_image">Search Image</a></div>
+      <div style="float:right" class="w3-bar-item"><a href="/logout">Logout</a> </div>
+      <div style="float:right" class="w3-bar-item"><label>Logged in as : {{username}}</label> </div>
+    </div>
+
+    <form name="search_form" action = "/search" method = "POST" enctype = "multipart/form-data">
+        <div style="padding-left:20px" class="form-group">
+            <br/>
+            <label>Enter the Title for the Image</label>
+            <input required='true' type="text" name="image_title"/><br/>
+            <input class="btn btn-primary" type = "Submit" value="Search"/><br/>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Sharing Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<div class="w3-bar w3-blue">
+   <div class="w3-bar-item"><a href="/view_images">View Images</a></div>
+   <div class="w3-bar-item"><a href="/upload_images">Upload Images</a></div>
+   <div class="w3-bar-item"><a href="/search_image">Search Image</a></div>
+   <div style="float:right" class="w3-bar-item"><a href="/logout">Logout</a> </div>
+   <div style="float:right" class="w3-bar-item"><label>Logged in as : {{username}}</label> </div>
+</div>
+<h1><center>Image Gallery</center></h1>
+<hr/>
+    {% for image in images %}
+          <div class="col-sm-2">
+            <div class="card" style="width: 20rem;">
+                <a href={{url_for('properties',title=image.title)}}><img height="150" width="150" class="card-img-top" src={{images_root_path+image.image_location+'?'+utc_now}} alt={{image.title}}></a>
+                <div class="card-block">
+                    <h4 class="card-title"><a href={{url_for('properties',title=image.title)}}><b>{{image.title}}</b></a></h4>
+                    <p class="card-text">Likes : {{image.likes}} &nbsp;&nbsp;<a href={{url_for('like',title=image.title)}}><img style="padding-bottom:5px"width="20" height="20" src="static/like.png" /></a></p>
+                </div>
+            </div>
+          </div>
+    {% endfor %}
+</body>
+</html>

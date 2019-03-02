@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Sharing Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <script>
+        function validateInput(){
+            var username = document.forms["login_form"]["username"].value;
+            username = username.trim();
+            var patt = new RegExp("^[a-zA-Z ]+$");
+            var res = patt.test(username);
+            if(res==false){
+                document.getElementById("error").innerHTML = '<b>Name cannot contain any special characters</b>';
+                return false;
+            }
+            document.getElementById("error").innerHTML = '';
+            return true;
+        }
+    </script>
+</head>
+<body>
+ <div class="container">
+        <div class="jumbotron text-center">
+            <h1>Welcome to the Image Sharing Application</h1>
+            <p align="right" class="lead">Name: Shashank Gaikaiwari<br/>
+            Last 4 digits ID: 5812<br/>
+            CSE 6331, Cloud Computing<br/>	</p>
+        </div>
+        <form name="login_form" class="form-horizontal" action="../login" method="POST" enctype="multipart/form-data" onSubmit="return validateInput()">
+              <label>Enter your name</label>
+              <input required name='username' type="text"/>
+              <p id="error" style="color:red;font-size:12px"></p>
+              <div class="radio">
+                  <label><input type="radio" name="vieworcreate" id="view" value="view" checked>View Images</label>
+              </div>
+              <div class="radio">
+                  <label><input type="radio" name="vieworcreate" id="create" value="create">Upload/Modify</label>
+              </div>
+
+              <input class="btn btn-primary" type="Submit" value="Login"/>
+          </form>
+ </div>
+</body>
+</html>

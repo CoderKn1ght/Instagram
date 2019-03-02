@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Images</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script>
+        function validateInput(){
+            var x = document.forms["upload_form"]["image_title"].value;
+            var patt = new RegExp("^[0-9a-zA-Z_]+$");
+            var res = patt.test(x);
+            if(res==false){
+                document.getElementById("error").innerHTML = 'Title can only contain alphanumeric characters without spaces';
+                return false;
+            }
+            document.getElementById("error").innerHTML = '';
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="w3-bar w3-blue">
+      <div class="w3-bar-item"><a href="/view_images">View Images</a></div>
+      <div class="w3-bar-item"><a href="/upload_images">Upload Images</a></div>
+      <div class="w3-bar-item"><a href="/search_image">Search Image</a></div>
+      <div style="float:right" class="w3-bar-item"><a href="/logout">Logout</a> </div>
+      <div style="float:right" class="w3-bar-item"><label>Logged in as : {{username}}</label> </div>
+    </div>
+    <form name="upload_form" action = "/upload" method = "POST" enctype = "multipart/form-data" onSubmit="return validateInput()">
+        <div style="padding-left:20px" class="form-group">
+            <br/>
+            <label>Enter the Title for the Image</label>
+            <input required='true' type="text" name="image_title"/><br/>
+            <p id="error" style="color:red;font-size:12px"></p>
+            <label>Select a file to upload</label>
+            <input type = "file" name = "file_upload"/>
+            <input class="btn btn-primary" type = "Submit" value="Upload"/><br/>
+            <p style="color:red;font-size:12px">*Trying to upload an image with an existing title will replace the image with the newly uploaded image</p>
+        </div>
+    </form>
+</body>
+</html>
