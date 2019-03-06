@@ -8,8 +8,8 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 # Variable Declarations
-ACCESS_KEY_ID = 'AKIAIC4BESOEKFVMV2MA'
-ACCESS_SECRET_KEY = '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'
+ACCESS_KEY_ID = 'access_key'
+ACCESS_SECRET_KEY = 'access_secret'
 BUCKET_NAME = 'imagegenerator-images'
 IMAGES_ROOT_PATH = 'https://s3.amazonaws.com/imagegenerator-images/'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -18,7 +18,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 application = Flask(__name__)
 application.secret_key = 'Secret'
 application.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'mysql://shashank:CloudComputing#@mydb.c4bjnkrrnir9.us-east-1.rds.amazonaws.com:3306/mydb'
+    'SQLALCHEMY_DATABASE_URI'] = 'db'
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # S3 Connection
